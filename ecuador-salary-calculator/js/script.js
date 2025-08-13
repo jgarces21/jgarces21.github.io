@@ -1,4 +1,14 @@
 const minimumSalary = 470; // 2025
+const localNumberFormat = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'});
+
+const waitThenRun = function (objectToWaitFor, callback) {
+    const interval = setInterval(function () {
+        if (window[objectToWaitFor] !== undefined) {
+            clearInterval(interval);
+            callback();
+        }
+    }, 100);
+};
 
 const calculate = function (salary) {
     salary = Number(salary);
@@ -21,7 +31,7 @@ const calculate = function (salary) {
     result.push(iess);
 
     var fondosReserva = new CostConcept();
-    fondosReserva.name = 'Fondos de Reserva (a partir del 13er mes) 1 sueldo/12';
+    fondosReserva.name = 'Fondos de Reserva (a partir del 13er mes) 1/12 sueldo';
     fondosReserva.value = salary / 12;
     result.push(fondosReserva);
 
@@ -43,14 +53,14 @@ const calculate = function (salary) {
 
     // decimo tercero
     var d3ro = new CostConcept();
-    d3ro.name = 'Décimo Tercero';
+    d3ro.name = 'D\u00E9cimo Tercero';
     d3ro.frequency = 'anual';
     d3ro.value = salary * 12 / 12;
     result.push(d3ro);
 
     // decimo cuarto
     var d4to = new CostConcept();
-    d4to.name = 'Décimo Cuarto';
+    d4to.name = 'D\u00E9cimo Cuarto';
     d4to.frequency = 'anual';
     d4to.value = minimumSalary;
     result.push(d4to);
@@ -95,7 +105,7 @@ const calculate = function (salary) {
 };
 
 const rowResultRender = function (item) {
-    const value = new Intl.NumberFormat('es-EC', {style: 'currency', currency: 'USD'}).format(item.value)
+    const value = localNumberFormat.format(item.value)
     return `<div class="result-item">
       <span class="col-8 ${item.bold ? 'fw-bold' : ''}">${item.name}</span>
       <span class="col-2 ${item.bold ? 'fw-bold' : ''} text-center">${item.frequency}</span>
@@ -114,7 +124,8 @@ const syncUI = function (result, val) {
 }
 
 window.onload = function () {
-    document.getElementById('gross-salary').value = minimumSalary;
+    let fixedMinimumSalary = minimumSalary.toFixed(2);
+    document.getElementById('gross-salary').value = fixedMinimumSalary;
 
     let result = calculate(minimumSalary);
     syncUI(result, minimumSalary);
@@ -124,5 +135,22 @@ window.onload = function () {
         let result = calculate(val);
         syncUI(result, val);
     });
-    document.getElementById('warning-message').innerHTML = 'El salario ingresado es menor al mínimo legal de ' + minimumSalary;
+    document.getElementById('warning-message').innerHTML = 'El salario ingresado es menor al m\u00EDnimo legal de ' + fixedMinimumSalary;
 };
+
+waitThenRun("$", function () {
+    $(document).ready(function () {
+        $('#gross-salary').blur(function () {
+            var inputValue = $(this).val();
+            if (inputValue !== '') { // Check if the input is not empty
+                var parsedValue = parseFloat(inputValue);
+                if (!isNaN(parsedValue)) { // Check if the parsed value is a valid number
+                    $(this).val(parsedValue.toFixed(2));
+                } else {
+                    // Handle invalid input, e.g., clear the field or show an error
+                    $(this).val('');
+                }
+            }
+        });
+    });
+});
