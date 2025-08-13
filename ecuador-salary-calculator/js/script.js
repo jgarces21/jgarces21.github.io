@@ -123,6 +123,12 @@ const syncUI = function (result, val) {
     document.getElementById('table-body').innerHTML = result.map(rowResultRender).join('')
 }
 
+function updateYear() {
+    const yearElement = document.getElementById('year');
+    const currentYear = new Date().getFullYear();
+    yearElement.textContent = '' + currentYear;
+}
+
 window.onload = function () {
     let fixedMinimumSalary = minimumSalary.toFixed(2);
     document.getElementById('gross-salary').value = fixedMinimumSalary;
@@ -136,6 +142,7 @@ window.onload = function () {
         syncUI(result, val);
     });
     document.getElementById('warning-message').innerHTML = 'El salario ingresado es menor al m\u00EDnimo legal de ' + fixedMinimumSalary;
+    updateYear();
 };
 
 waitThenRun("$", function () {
