@@ -5,120 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecuador Salary Calculator</title>
     <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Navigation styles */
-        header nav {
-            margin-top: 1.5rem;
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .nav-link {
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .nav-link:hover, .nav-link:focus {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .nav-link.active {
-            background-color: var(--secondary-color);
-            border-color: var(--secondary-color);
-            color: white;
-        }
-        
-        /* Calculator specific styles */
-        .calculator-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--primary-color);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        
-        .btn {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-        }
-        
-        .btn:hover {
-            background-color: #2980b9;
-        }
-        
-        .results {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background-color: #f8f9fa;
-            border-radius: 4px;
-            display: none;
-        }
-        
-        .results h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-        
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .result-item:last-child {
-            border-bottom: none;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <script src="./js/script.js"></script>
 </head>
 <body>
     <header>
         <div class="container">
             <h1>Ecuador Salary Calculator</h1>
             <nav>
-                <a href="../#about" class="nav-link"><i class="fas fa-user"></i> About</a>
-                <a href="../#experience" class="nav-link"><i class="fas fa-briefcase"></i> Experience</a>
-                <a href="../#local-tools" class="nav-link active"><i class="fas fa-tools"></i> Tools</a>
-                <a href="../#projects" class="nav-link"><i class="fas fa-code"></i> Projects</a>
+                <a href="../#about" class="navigation-link"><i class="fas fa-user"></i> About</a>
+                <a href="../#experience" class="navigation-link"><i class="fas fa-briefcase"></i> Experience</a>
+                <a href="../#local-tools" class="navigation-link active"><i class="fas fa-tools"></i> Tools</a>
+                <a href="../#projects" class="navigation-link"><i class="fas fa-code"></i> Projects</a>
             </nav>
         </div>
     </header>
@@ -126,48 +27,34 @@
     <section id="calculator">
         <div class="container">
             <div class="calculator-container">
-                <h2>Calculate Your Net Salary</h2>
-                <p>Enter your details to calculate your net salary after taxes and deductions in Ecuador.</p>
-                
+                <h2>Calculadora de salarios para Ecuador</h2>
+
                 <form id="salary-form">
                     <div class="form-group">
-                        <label for="gross-salary">Gross Monthly Salary (USD)</label>
-                        <input type="number" id="gross-salary" class="form-control" required min="0" step="0.01" placeholder="e.g., 1000.00">
+                        <label for="gross-salary" class="form-label">Ingrese el salario del empleado (USD)</label>
+                        <input type="number" id="gross-salary" class="form-control form-control-lg text-end" required min="0" step="0.01" placeholder="0.00">
                     </div>
-                    
-                    <div class="form-group">
-                        <label for="dependents">Number of Dependents</label>
-                        <input type="number" id="dependents" class="form-control" min="0" value="0">
+
+                    <div id="warning" class="alert alert-warning d-none" role="alert">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <span id="warning-message"></span>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>
-                            <input type="checkbox" id="has-disability">
-                            I have a disability (3% tax reduction)
-                        </label>
-                    </div>
-                    
-                    <button type="submit" class="btn">Calculate</button>
                 </form>
                 
                 <div id="results" class="results">
-                    <h3>Results</h3>
-                    <div class="result-item">
-                        <span>Gross Salary:</span>
-                        <span id="gross-result">$0.00</span>
+                    <h3>Valores</h3>
+                    <div id="table-header">
+                        <div class="result-item">
+                            <span class="col-8">Concepto</span>
+                            <span class="col-2 text-center">Frecuencia</span>
+                            <span class="col-2 text-end">Valor</span>
+                        </div>
                     </div>
-                    <div class="result-item">
-                        <span>IESS (Social Security):</span>
-                        <span id="iess-result">$0.00</span>
-                    </div>
-                    <div class="result-item">
-                        <span>Income Tax:</span>
-                        <span id="tax-result">$0.00</span>
-                    </div>
-                    <div class="result-item">
-                        <span>Net Salary:</span>
-                        <span id="net-result" style="color: var(--secondary-color);">$0.00</span>
-                    </div>
+                    <div id="table-body"></div>
+                </div>
+                <div class="mt-4 text-muted small">
+                    <p class="mb-1"><i class="fas fa-info-circle me-2"></i>Esta calculadora es una herramienta de referencia y puede no reflejar valores exactos.</p>
+                    <p class="mb-0">Última actualización: Agosto 2023</p>
                 </div>
             </div>
         </div>
