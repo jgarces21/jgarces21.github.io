@@ -125,52 +125,72 @@ const rowResultRender = function (item) {
 }
 
 const syncUI = function (result, val) {
-    let warningElement = document.getElementById('warning');
     if (val < minimumSalary) {
-        warningElement.classList.remove('d-none');
+        $('warning').removeClass('d-none');
     } else {
-        warningElement.classList.add('d-none');
+        $('warning').addClass('d-none');
     }
-    document.getElementById('table-body').innerHTML = [...result.values()].map(rowResultRender).join('')
+    const tableBody = [...result.values()].map(rowResultRender).join('');
+    $('#table-body').html(tableBody);
     $('#liquid-salary').val(result.get('salarioRecibirEmpleado').value.toFixed(2));
-    $('#liquid-salary-2').val((result.get('salarioRecibirEmpleado').value + result.get('fondosReserva').value).toFixed(2));
+    $('#liquid-salary-plus').val((result.get('salarioRecibirEmpleado').value + result.get('fondosReserva').value).toFixed(2));
 }
 
 function updateYear() {
-    const yearElement = document.getElementById('year');
     const currentYear = new Date().getFullYear();
-    yearElement.textContent = '' + currentYear;
+    $('#year').html(currentYear);
 }
-
-window.onload = function () {
-    const fixedMinimumSalary = round(minimumSalary, 2).toFixed(2);
-    document.getElementById('gross-salary').value = fixedMinimumSalary;
-
-    let result = calculate(minimumSalary);
-    syncUI(result, minimumSalary);
-
-    document.getElementById('gross-salary').addEventListener('change', function () {
-        let val = this.value
-        let result = calculate(val);
-        syncUI(result, val);
-    });
-    document.getElementById('warning-message').innerHTML = 'El salario ingresado es menor al m\u00EDnimo legal de ' + fixedMinimumSalary;
-    updateYear();
-};
 
 waitThenRun("$", function () {
     $(document).ready(function () {
-        $('#gross-salary').blur(function () {
-            var inputValue = $(this).val();
-            if (inputValue !== '') { // Check if the input is not empty
-                var parsedValue = parseFloat(inputValue);
-                if (!isNaN(parsedValue)) { // Check if the parsed value is a valid number
-                    $(this).val(parsedValue.toFixed(2));
-                } else {
-                    // Handle invalid input, e.g., clear the field or show an error
-                    $(this).val('');
+        const fixedMinimumSalary = round(minimumSalary, 2).toFixed(2);
+
+        let result = calculate(minimumSalary);
+        syncUI(result, minimumSalary);
+
+        $('#warning-message').innerHTML = 'El salario ingresado es menor al m\u00EDnimo legal de ' + fixedMinimumSalary;
+        updateYear();
+
+        $('#calculator-type')
+            .on('change', function () {
+                const $grossSalary = $('#gross-salary');
+                const $liquidSalary = $('#liquid-salary');
+                const $liquidSalaryPlus = $('#liquid-salary-plus');
+                if (this.value === 'net') {
+                    $grossSalary.removeAttr('disabled');
+                } else if ($grossSalary.attr('disabled') !== 'disabled') {
+                    $grossSalary.attr('disabled', 'disabled');
                 }
-            }
-        });
+                if (this.value === 'liquid') {
+                    $liquidSalary.removeAttr('disabled');
+                } else if ($liquidSalary.attr('disabled') !== 'disabled') {
+                    $liquidSalary.attr('disabled', 'disabled');
+                }
+                if (this.value === 'liquid-plus') {
+                    $liquidSalaryPlus.removeAttr('disabled');
+                } else if ($liquidSalaryPlus.attr('disabled') !== 'disabled') {
+                    $liquidSalaryPlus.attr('disabled', 'disabled');
+                }
+            });
+
+        $('#gross-salary')
+            .val(fixedMinimumSalary)
+            .on('change', function () {
+                let val = this.value
+                let result = calculate(val);
+                syncUI(result, val);
+            })
+            .blur(function () {
+                var inputValue = $(this).val();
+                if (inputValue !== '') { // Check if the input is not empty
+                    var parsedValue = parseFloat(inputValue);
+                    if (!isNaN(parsedValue)) { // Check if the parsed value is a valid number
+                        $(this).val(parsedValue.toFixed(2));
+                    } else {
+                        // Handle invalid input, e.g., clear the field or show an error
+                        $(this).val('');
+                    }
+                }
+            });
     });
 });

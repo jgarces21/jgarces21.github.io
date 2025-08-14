@@ -54,6 +54,21 @@
             <form id="salary-form">
                 <div class="form-group row">
                     <div class="col-md-8 d-flex">
+                        <label for="calculator-type" class="form-label d-flex align-items-center">Forma de c&aacute;lculo</label>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group input-group-lg">
+                            <select class="form-select" id="calculator-type">
+                                <option value="net" selected>Salario Bruto</option>
+                                <option value="liquid">Salario L&iacute;quido Primer A&ntilde;o</option>
+                                <option value="liquid-plus">Salario L&iacute;quido Mayor a 1 A&ntilde;o</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-8 d-flex">
                         <label for="gross-salary" class="form-label d-flex align-items-center">Ingrese el salario del
                             empleado (USD)</label>
                     </div>
@@ -92,7 +107,7 @@
 
                 <div class="form-group row">
                     <div class="col-md-8 d-flex">
-                        <label for="liquid-salary-2" class="form-label d-flex align-items-center col-md-10">Salario l&#237;quido del
+                        <label for="liquid-salary-plus" class="form-label d-flex align-items-center col-md-10">Salario l&#237;quido del
                             empleado (USD) mayor a 1 a&#241;o</label>
                         <div class="col-md-2 text-end">
                             <i class="fas fa-calendar-plus align-middle fa-height"></i>
@@ -103,7 +118,7 @@
                     <div class="col-md-4">
                         <div class="input-group input-group-lg">
                             <span class="input-group-text">$</span>
-                            <input type="number" id="liquid-salary-2" class="form-control form-control-lg text-end"
+                            <input type="number" id="liquid-salary-plus" class="form-control form-control-lg text-end"
                                    min="0" step="0.01" placeholder="0.00" disabled>
                         </div>
                     </div>
@@ -130,10 +145,14 @@
             <div class="mt-4 text-muted small">
                 <p class="mb-1"><i class="fas fa-receipt me-2"></i>Sin descontar impuesto a la renta</p>
             </div>
-            <div class="mt-4 text-muted small">
-                <p class="mb-1"><i class="fas fa-info-circle me-2"></i>Esta calculadora es una herramienta de referencia
-                    y puede no reflejar valores exactos.</p>
-                <p class="mb-0">&#218;ltima actualizaci&#243;n: Agosto 2025</p>
+            <div class="legend mt-4">
+                <div class="text-muted small">
+                    <p class="mb-1"><i class="fas fa-info-circle me-2"></i>Esta calculadora es una herramienta de referencia
+                        y puede no reflejar valores exactos.</p>
+                </div>
+                <div class="mt-4 text-muted small">
+                    <p class="mb-0">&#218;ltima actualizaci&#243;n: Agosto 2025</p>
+                </div>
             </div>
         </div>
     </div>

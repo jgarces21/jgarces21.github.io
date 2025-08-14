@@ -103,6 +103,12 @@ header nav {
     font-size: 1.1rem;
 }
 
+.legend {
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+}
+
 .fa-height {
     height: 1px;
 }
