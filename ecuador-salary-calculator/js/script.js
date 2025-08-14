@@ -89,7 +89,7 @@ const calculate = function (salary) {
 
     // Anualizado empleador
     var anualE = new CostConcept();
-    anualE.name = 'Total para el Empleador';
+    anualE.name = 'Total para el Empleador (Primer a\u00F1o)';
     anualE.frequency = 'anual';
     anualE.value = round((salary * 12) +
         (iess.value * -12) +
@@ -97,11 +97,12 @@ const calculate = function (salary) {
         (d3ro.value) +
         (d4to.value), 2);
     anualE.bold = true;
+    anualE.decorator = 'fa-calendar';
     result.set('anualE', anualE);
 
     // Anualizado empleador con fondos de reserva
     var anualEFR = new CostConcept();
-    anualEFR.name = 'Total para el Empleador (Incluye fondos de reserva)';
+    anualEFR.name = 'Total para el Empleador (Desde segundo a\u00F1o)';
     anualEFR.frequency = 'anual';
     anualEFR.value = round((salary * 12) +
         (iess.value * -12) +
@@ -110,6 +111,7 @@ const calculate = function (salary) {
         (d4to.value) +
         (fondosReserva.value * 12), 2);
     anualEFR.bold = true;
+    anualEFR.decorator = 'fa-calendar-plus';
     result.set('anualEFR', anualEFR);
     return result;
 };

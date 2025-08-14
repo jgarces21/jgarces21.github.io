@@ -97,7 +97,7 @@ header nav {
     color: var(--secondary-color);
 }
 
-.result-item:last-child {
+.result-item.header {
     border-bottom: none;
     font-weight: bold;
     font-size: 1.1rem;
