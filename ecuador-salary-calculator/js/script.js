@@ -1,4 +1,6 @@
-const minimumSalary = 470; // 2025
+const PORCENTAJE_IESS_EMPLEADOR = 0.0945;
+const MINIMUM_SALARY = 470; // 2025
+
 const localNumberFormat = new Intl.NumberFormat('en-US', {style: 'currency', currency: 'USD'});
 
 const waitThenRun = function (objectToWaitFor, callback) {
@@ -31,7 +33,7 @@ const calculate = function (salary) {
     // iess
     var iess = new CostConcept();
     iess.name = 'IESS Empleado (9.45%)';
-    iess.value = round(salary * 0.0945, 2);
+    iess.value = round(salary * PORCENTAJE_IESS_EMPLEADOR, 2);
     result.set('iess', iess);
 
     var fondosReserva = new CostConcept();
@@ -68,7 +70,7 @@ const calculate = function (salary) {
     var d4to = new CostConcept();
     d4to.name = 'D\u00E9cimo Cuarto';
     d4to.frequency = 'anual';
-    d4to.value = round(minimumSalary, 2);
+    d4to.value = round(MINIMUM_SALARY, 2);
     result.set('d4to', d4to);
 
     // Anualizado empleado
@@ -124,73 +126,109 @@ const rowResultRender = function (item) {
     </div>`
 }
 
-const syncUI = function (result, val) {
-    if (val < minimumSalary) {
-        $('warning').removeClass('d-none');
+const syncUI = function (result, val, requester) {
+    if (val < MINIMUM_SALARY) {
+        $('#warning').removeClass('d-none');
     } else {
-        $('warning').addClass('d-none');
+        $('#warning').addClass('d-none');
     }
     const tableBody = [...result.values()].map(rowResultRender).join('');
     $('#table-body').html(tableBody);
-    $('#liquid-salary').val(result.get('salarioRecibirEmpleado').value.toFixed(2));
-    $('#liquid-salary-plus').val((result.get('salarioRecibirEmpleado').value + result.get('fondosReserva').value).toFixed(2));
+    if (requester !== 0) {
+        $('#gross-salary').val(val.toFixed(2));
+    }
+    if (requester !== 1) {
+        $('#liquid-salary').val(result.get('salarioRecibirEmpleado').value.toFixed(2));
+    }
+    if (requester !== 2) {
+        $('#liquid-salary-plus').val((result.get('salarioRecibirEmpleado').value + result.get('fondosReserva').value).toFixed(2));
+    }
 }
 
-function updateYear() {
+const updateYear = function () {
     const currentYear = new Date().getFullYear();
     $('#year').html(currentYear);
-}
+};
+
+const onNumericInputBlur = function () {
+    var inputValue = $(this).val();
+    if (inputValue !== '') { // Check if the input is not empty
+        var parsedValue = parseFloat(inputValue);
+        if (!isNaN(parsedValue)) { // Check if the parsed value is a valid number
+            $(this).val(parsedValue.toFixed(2));
+        } else {
+            // Handle invalid input, e.g., clear the field or show an error
+            $(this).val('');
+        }
+    }
+};
+
+const onCalculatorChange = function () {
+    const $grossSalary = $('#gross-salary');
+    const $liquidSalary = $('#liquid-salary');
+    const $liquidSalaryPlus = $('#liquid-salary-plus');
+    if (this.value === 'net') {
+        $grossSalary.removeAttr('disabled');
+    } else if ($grossSalary.attr('disabled') !== 'disabled') {
+        $grossSalary.attr('disabled', 'disabled');
+    }
+    if (this.value === 'liquid') {
+        $liquidSalary.removeAttr('disabled');
+    } else if ($liquidSalary.attr('disabled') !== 'disabled') {
+        $liquidSalary.attr('disabled', 'disabled');
+    }
+    if (this.value === 'liquid-plus') {
+        $liquidSalaryPlus.removeAttr('disabled');
+    } else if ($liquidSalaryPlus.attr('disabled') !== 'disabled') {
+        $liquidSalaryPlus.attr('disabled', 'disabled');
+    }
+};
 
 waitThenRun("$", function () {
     $(document).ready(function () {
-        const fixedMinimumSalary = round(minimumSalary, 2).toFixed(2);
+        const fixedMinimumSalary = round(MINIMUM_SALARY, 2).toFixed(2);
 
-        let result = calculate(minimumSalary);
-        syncUI(result, minimumSalary);
+        let result = calculate(MINIMUM_SALARY);
+        syncUI(result, MINIMUM_SALARY);
 
-        $('#warning-message').innerHTML = 'El salario ingresado es menor al m\u00EDnimo legal de ' + fixedMinimumSalary;
+        $('#warning-message').html('El salario ingresado es menor al m\u00EDnimo legal de ' + fixedMinimumSalary);
+
         updateYear();
 
-        $('#calculator-type')
-            .on('change', function () {
-                const $grossSalary = $('#gross-salary');
-                const $liquidSalary = $('#liquid-salary');
-                const $liquidSalaryPlus = $('#liquid-salary-plus');
-                if (this.value === 'net') {
-                    $grossSalary.removeAttr('disabled');
-                } else if ($grossSalary.attr('disabled') !== 'disabled') {
-                    $grossSalary.attr('disabled', 'disabled');
-                }
-                if (this.value === 'liquid') {
-                    $liquidSalary.removeAttr('disabled');
-                } else if ($liquidSalary.attr('disabled') !== 'disabled') {
-                    $liquidSalary.attr('disabled', 'disabled');
-                }
-                if (this.value === 'liquid-plus') {
-                    $liquidSalaryPlus.removeAttr('disabled');
-                } else if ($liquidSalaryPlus.attr('disabled') !== 'disabled') {
-                    $liquidSalaryPlus.attr('disabled', 'disabled');
-                }
-            });
+        $('#calculator-type').on('change', onCalculatorChange);
 
         $('#gross-salary')
             .val(fixedMinimumSalary)
             .on('change', function () {
+                if ($(this).attr('disabled') === 'disabled') {
+                    return
+                }
                 let val = this.value
                 let result = calculate(val);
-                syncUI(result, val);
+                syncUI(result, val, 0);
             })
-            .blur(function () {
-                var inputValue = $(this).val();
-                if (inputValue !== '') { // Check if the input is not empty
-                    var parsedValue = parseFloat(inputValue);
-                    if (!isNaN(parsedValue)) { // Check if the parsed value is a valid number
-                        $(this).val(parsedValue.toFixed(2));
-                    } else {
-                        // Handle invalid input, e.g., clear the field or show an error
-                        $(this).val('');
-                    }
+            .blur(onNumericInputBlur);
+        $('#liquid-salary')
+            .blur(onNumericInputBlur)
+            .on('change', function () {
+                if ($(this).attr('disabled') === 'disabled') {
+                    return
                 }
+                let val = this.value
+                const salary = round(val / (1 - PORCENTAJE_IESS_EMPLEADOR), 2);
+                let result = calculate(salary);
+                syncUI(result, salary, 1);
+            });
+        $('#liquid-salary-plus')
+            .blur(onNumericInputBlur)
+            .on('change', function () {
+                if ($(this).attr('disabled') === 'disabled') {
+                    return
+                }
+                let val = this.value
+                const salary = round((12 * val) / (12 - (12 * PORCENTAJE_IESS_EMPLEADOR) + 1), 2);
+                let result = calculate(salary);
+                syncUI(result, salary, 2);
             });
     });
 });
