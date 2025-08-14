@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Allow: /ecuador-salary-calculator/
+
+Sitemap: https://jgarces21.github.io/sitemap.xml
