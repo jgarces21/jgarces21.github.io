@@ -5,7 +5,11 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D48H42WNKR"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
         gtag('js', new Date());
 
         gtag('config', 'G-D48H42WNKR');
@@ -14,76 +18,108 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>George Garc&#233;s - Portfolio</title>
     <link rel="stylesheet" href="css/styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+          integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>George Garc&#233;s</h1>
-            <p class="tagline">Software Engineer & Technology Enthusiast</p>
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/george-garces/" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-                <a href="https://github.com/jgarces21" target="_blank" rel="noopener noreferrer">
-                    <i class="fab fa-github"></i>
-                </a>
-            </div>
+<header>
+    <div class="container">
+        <h1>George Garc&#233;s</h1>
+        <p class="tagline">Software Engineer & Technology Enthusiast</p>
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/george-garces/" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="https://github.com/jgarces21" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-github"></i>
+            </a>
         </div>
-    </header>
+    </div>
+</header>
 
-    <section id="about">
-        <div class="container">
-            <h2>About Me</h2>
-            <p>Detail-oriented software engineer with experience in full-stack development and a passion for creating efficient, scalable solutions.</p>
+<section id="about">
+    <div class="container">
+        <h2>About Me</h2>
+        <p>Detail-oriented software engineer with experience in full-stack development and a passion for creating
+            efficient, scalable solutions.</p>
+    </div>
+</section>
+
+<section id="experience">
+    <div class="container">
+        <h2>Professional Experience</h2>
+        <div class="experience-item">
+            <h3>Loading experience...</h3>
+            <p>Fetching experience from LinkedIn...</p>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="experience">
-        <div class="container">
-            <h2>Professional Experience</h2>
-            <div class="experience-item">
-                <h3>Loading experience...</h3>
-                <p>Fetching experience from LinkedIn...</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="local-tools">
-        <div class="container">
-            <h2>Local Tools</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-content">
-                        <h3>Ecuador Salary Calculator</h3>
-                        <p class="project-description">A calculator to help you estimate your net salary in Ecuador after taxes and social security deductions.</p>
-                        <a href="ecuador-salary-calculator/" class="project-link">
-                            Open Calculator <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
+<section id="local-tools">
+    <div class="container">
+        <h2>Local Tools</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>Ecuador Salary Calculator</h3>
+                    <p class="project-description">A calculator to help you estimate your net salary in Ecuador after
+                        taxes and social security deductions.</p>
+                    <a href="ecuador-salary-calculator/" class="project-link">
+                        Open Calculator <i class="fas fa-external-link-alt"></i>
+                    </a>
                 </div>
-                <!-- More local tools can be added here in the same format -->
+            </div>
+            <!-- More local tools can be added here in the same format -->
+        </div>
+    </div>
+</section>
+
+<section id="projects">
+    <div class="container">
+        <h2>GitHub Projects</h2>
+        <div id="github-projects" class="projects-grid">
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>jgarces21.github.io</h3>
+                    <p class="project-description">No description available</p>
+                    <div class="project-meta">
+                        <span><i class="fas fa-star"></i> 0</span>
+                        <span><i class="fas fa-code-branch"></i> HTML</span>
+                    </div>
+                    <a href="https://github.com/jgarces21/jgarces21.github.io" target="_blank" rel="noopener noreferrer"
+                       class="project-link">
+                        View on GitHub <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>k8s-nginx-proxy</h3>
+                    <p class="project-description">Intensive Load Nginx K8s Cache Proxy</p>
+                    <div class="project-meta">
+                        <span><i class="fas fa-star"></i> 0</span>
+                        <span><i class="fas fa-code-branch"></i> Dockerfile</span>
+                    </div>
+                    <a href="https://github.com/jgarces21/k8s-nginx-proxy" target="_blank" rel="noopener noreferrer"
+                       class="project-link">
+                        View on GitHub <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <section id="projects">
-        <div class="container">
-            <h2>GitHub Projects</h2>
-            <div id="github-projects" class="projects-grid">
-                <p>Loading projects from GitHub...</p>
-            </div>
-        </div>
-    </section>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8465245730668494"
+        crossorigin="anonymous"></script>
+<footer>
+    <div class="container">
+        <p>&copy; <span id="year"></span> George Garc&#233;s. All rights reserved.</p>
+    </div>
+</footer>
 
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8465245730668494"
-            crossorigin="anonymous"></script>
-    <footer>
-        <div class="container">
-            <p>&copy; <span id="year"></span> George Garc&#233;s. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <script src="js/main.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
