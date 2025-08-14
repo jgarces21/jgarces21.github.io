@@ -23,6 +23,8 @@ const calculate = function (salary) {
         this.frequency = 'mensual';
         this.bold = false;
         this.value = 0;
+        this.decorator = '';
+        this.secondaryColor = '';
     };
     var result = new Map();
     var s = new CostConcept();
