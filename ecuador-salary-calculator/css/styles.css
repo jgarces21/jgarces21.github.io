@@ -46,7 +46,7 @@ header nav {
 
 .form-group label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0;
     font-weight: 500;
     color: var(--primary-color);
 }
@@ -101,4 +101,8 @@ header nav {
     border-bottom: none;
     font-weight: bold;
     font-size: 1.1rem;
+}
+
+.fa-height {
+    height: 1px;
 }
