@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Allow: /ecuador-salary-calculator/
+Allow: /ecuador-income-tax-calculator/
 
 Sitemap: https://jgarces21.github.io/sitemap.xml
